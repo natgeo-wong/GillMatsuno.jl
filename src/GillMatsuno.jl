@@ -4,10 +4,10 @@ module GillMatsuno
 # to the atmosphere
 
 ## Modules Used
-#using Plots, NetCDF
+using Seaborn, NetCDF
 
 export
-        GManalytic, GMnumeric
+        GManalytic, GMcalc
 
 ## Including other files in the module
 
