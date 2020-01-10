@@ -4,19 +4,13 @@ module GillMatsuno
 # to the atmosphere
 
 ## Modules Used
-using Seaborn, NetCDF
-
 export
         GManalytic, GMcalc
 
 ## Including other files in the module
 
 include("anadefault.jl")
-include("anasmallbeta.jl")
-include("anasmallH.jl")
-
 include("numdefault.jl")
-include("numwaves.jl")
 
 
 end # module

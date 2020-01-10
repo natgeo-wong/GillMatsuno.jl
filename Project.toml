@@ -3,10 +3,6 @@ uuid = "39e863eb-a116-4232-ae62-2a8db89e9457"
 authors = ["Nathanael Wong <natgeo.wong@outlook.com>"]
 version = "0.1.0"
 
-[deps]
-NetCDF = "30363a11-5582-574a-97bb-aa9a979735b9"
-Seaborn = "d2ef9438-c967-53ab-8060-373fdd9e13eb"
-
 [compat]
 julia = "1"
 
