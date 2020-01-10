@@ -13,8 +13,8 @@ initial conditions u = v = ϕ = 0.
 """
 
 function ufield!(
-    un::Array,u::Array,ϕ::Array,v::Array,y::Array,δt::Real,δx::Real;
-    parameters::Array=[0.1,0.5,1,1],nsize::Array
+    un::Array, u::Array, ϕ::Array, v::Array, y::Array, δt::Real, δx::Real;
+    parameters::Array=[0.1,0.5,1,1], nsize::Array
 )
 
     α,β,g,H = parameters; nx,ny = nsize;
@@ -35,8 +35,8 @@ function ufield!(
 end
 
 function vfield!(
-    vn::Array,v::Array,ϕ::Array,u::Array,y::Array,δt::Real,δy::Real;
-    parameters::Array=[0.1,0.5,1,1],nsize::Array
+    vn::Array, v::Array, ϕ::Array, u::Array, y::Array, δt::Real, δy::Real;
+    parameters::Array=[0.1,0.5,1,1], nsize::Array
 )
 
     α,β,g,H = parameters; nx,ny = nsize;
@@ -57,8 +57,8 @@ function vfield!(
 end
 
 function ϕfield!(
-    ϕn::Array,ϕ::Array,u::Array,v::Array,Q::Array,δt::Real,δx::Real,δy::Real;
-    parameters::Array=[0.1,0.5,1,1],nsize::Array
+    ϕn::Array, ϕ::Array, u::Array, v::Array, Q::Array, δt::Real, δx::Real, δy::Real;
+    parameters::Array=[0.1,0.5,1,1], nsize::Array
 )
 
     α,β,g,H = parameters; nx,ny = nsize;
@@ -83,7 +83,9 @@ function ϕfield!(
 
 end
 
-function Qfield!(Q::Array,A::Real,L::Real,xvec::Array,yvec::Array,nx::Integer,ny::Integer)
+function Qfield!(Q::Array, A::Real, L::Real, xvec::Array, yvec::Array, nsize::Array)
+
+    nx,ny = nsize;
 
     for jj = 1 : ny
         for ii = 1 : nx
@@ -98,18 +100,17 @@ function Qfield!(Q::Array,A::Real,L::Real,xvec::Array,yvec::Array,nx::Integer,ny
 
 end
 
-function GMcalc(;xmin::Real=-25.0,xmax::Real=50.0,δx::Real=0.1,
-                ymin::Real=-10.0,ymax::Real=10.0,δy::Real=0.1,
-                nt::Integer=5000,δt::Real=0.001,
-                A::Real=1,L::Real=2,α::Real=0.1,β::Real=0.5,g::Real=1.0,H::Real=1.0)
+function GMcalc(;xmin::Real=-25.0, xmax::Real=50.0, δx::Real=0.1,
+                ymin::Real=-10.0, ymax::Real=10.0, δy::Real=0.1,
+                nt::Integer=5000, δt::Real=0.001,
+                A::Real=1, L::Real=2, α::Real=0.1, β::Real=0.5, g::Real=1.0, H::Real=1.0)
 
     xvec = convert(Array,xmin:δx:xmax); nx = length(xvec);
-    yvec = convert(Array,ymin:δy:ymax); ny = length(yvec);
+    yvec = convert(Array,ymin:δy:ymax); ny = length(yvec); nsize = [nx,ny];
     x = repeat(xvec,1,ny); y = convert(Array,transpose(repeat(yvec,1,nx)));
-    Q = zeros(nx,ny); Qfield!(Q,A,L,xvec,yvec,nx,ny);
+    Q = zeros(nx,ny); Qfield!(Q,A,L,xvec,yvec,nsize);
     ϕ = zeros(nx,ny); u = zeros(nx,ny); v = zeros(nx,ny);
     ϕn = zeros(nx,ny); un = zeros(nx,ny); vn = zeros(nx,ny);
-    nsize = [nx,ny];
 
     for tt = 1 : nt
         ϕfield!(ϕn,ϕ,u,v,Q,δt,δx,δy,parameters=[α,β,g,H],nsize=nsize)
