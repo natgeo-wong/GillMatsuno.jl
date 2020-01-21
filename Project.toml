@@ -1,7 +1,11 @@
 name = "GillMatsuno"
 uuid = "39e863eb-a116-4232-ae62-2a8db89e9457"
 authors = ["Nathanael Wong <natgeo.wong@outlook.com>"]
+<<<<<<< HEAD
 version = "1.0.0"
+=======
+version = "1.0"
+>>>>>>> 6e4ef65f1196c332cc4f95a175ab33d4fffd7c0a
 
 [compat]
 julia = "1"
