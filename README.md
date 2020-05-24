@@ -1,8 +1,31 @@
 # **<div align="center">GillMatsuno.jl</div>**
 
+<p align="center">
+  <a href="https://www.repostatus.org/#active">
+    <img alt="Repo Status" src="https://www.repostatus.org/badges/latest/active.svg?style=flat-square" />
+  </a>
+  <a href="https://travis-ci.com/github/natgeo-wong/GillMatsuno.jl">
+    <img alt="Travis CI" src="https://travis-ci.com/natgeo-wong/GillMatsuno.jl.svg?branch=master&style=flat-square">
+  </a>
+  <a href="https://github.com/natgeo-wong/GillMatsuno.jl/actions?query=workflow%3ADocumentation">
+    <img alt="Documentation Build" src="https://github.com/natgeo-wong/GillMatsuno.jl/workflows/Documentation/badge.svg">
+  </a>
+  <br>
+  <a href="https://mit-license.org">
+    <img alt="MIT License" src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square">
+  </a>
+  <img alt="Latest Release" src="https://img.shields.io/github/v/release/natgeo-wong/GillMatsuno.jl">
+  <a href="https://natgeo-wong.github.io/GillMatsuno.jl/stable/">
+    <img alt="Latest Documentation" src="https://img.shields.io/badge/docs-stable-blue.svg?style=flat-square">
+  </a>
+  <a href="https://natgeo-wong.github.io/GillMatsuno.jl/dev/">
+    <img alt="Latest Documentation" src="https://img.shields.io/badge/docs-latest-blue.svg?style=flat-square">
+  </a>
+</p>
+
 **Created By:** Nathanael Wong (nathanaelwong@fas.harvard.edu)
 
-## **Introduction**
+## Introduction
 
 `GillMatsuno.jl` is a Julia package that:
 * numerically solves the Shallow-Water Equations on a $\beta$-plane
@@ -13,17 +36,7 @@
 ] add GillMatsuno
 ```
 
-## Equations
-The Shallow-Water Equations are as described by *Vallis [2018]* (Atmospheric and Oceanic Fluid Dynamics, 2nd Edition):
-```
-∂u/∂t + αu + ∂ϕ/∂x - βyv = 0
-∂v/∂t + αu + ∂ϕ/∂y + βyu = 0
-∂ϕ/∂t + αϕ + gH(∂u/∂x + ∂v/∂y) = -Q
-```
-
-We solve the equations numerically using the Finite-Difference Method.  The backend solvers can be found in `src/numdefault.jl`, but this README will not go through the details.
-
-## Running the Gill-Matsuno Numerical Model
+## Using `GillMatsuno.jl`
 The numerical solution to the Gill-Matusno Model is called using `GMcalc()`.  This function accepts the following keyword arguments as modifications to the initial model:
 * `xmin` and `xmax` define the left and right boundaries of the domain
 * `ymin` and `ymax` define the lower and upper boundaries of the domain
