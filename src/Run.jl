@@ -23,6 +23,7 @@ function runGillMatsuno(
     ϕ  = zeros(FT,nx,ny);    u  = zeros(FT,nx,ny);    v  = zeros(FT,nx,ny+1);
     ϕn = zeros(FT,nx,ny);    un = zeros(FT,nx,ny);    vn = zeros(FT,nx,ny+1);
     ϕf = zeros(FT,nx,ny,nt); uf = zeros(FT,nx,ny,nt); vf = zeros(FT,nx,ny+1,nt);
+	t  = zeros(nt)
 
     for it = 1 : rt
 
@@ -38,16 +39,81 @@ function runGillMatsuno(
             ot += S.ft
             if !isone(it)
             	mt += 1
-				@info "$(now()) - Saving output at $(@sprintf("%06.2f",st)) model seconds ..."
+				@info "$(now()) - Extracting output at $(@sprintf("%06.2f",st)) model seconds ..."
                 ϕf[:,:,mt] .= ϕ
                 uf[:,:,mt] .= u
                 vf[:,:,mt] .= v
+				t[mt] = st
             end
         end
 
     end
 
-	return ϕf
+	savefields(uf,vf,ϕf,t,G,S)
+
+end
+
+function savefields(
+	u :: Array{FT},
+	v :: Array{FT},
+	ϕ :: Array{FT},
+	t :: Array{<:Real},
+	G :: Grid{FT},
+	S :: Simulation{FT}
+) where FT <: Real
+
+	if isfile(S.fnc)
+        @info "$(now()) - Stale NetCDF file $(S.fnc) detected.  Overwriting ..."
+        rm(S.fnc);
+    end
+	ds = NCDataset(S.fnc,"c",attrib = Dict(
+        "Conventions" => "CF-1.6",
+        "history"     => "Created as output by the GillMatsuno.jl package on $(Dates.now())"
+    ));
+
+	ds.dim["xC"] = G.nx
+    ds.dim["yC"] = G.ny
+    ds.dim["xF"] = G.nx
+    ds.dim["yF"] = G.ny + 1
+    ds.dim["time"] = length(t)
+
+	ncxC = defVar(ds,"xC",FT,("xC",),attrib = Dict("long_name" => "X center",))
+	ncyC = defVar(ds,"yC",FT,("yC",),attrib = Dict("long_name" => "Y center",))
+	ncxF = defVar(ds,"xF",FT,("xF",),attrib = Dict("long_name" => "X face",))
+	ncyF = defVar(ds,"yF",FT,("yF",),attrib = Dict("long_name" => "Y face",))
+	nct  = defVar(ds,"time",Float64,("time",),attrib = Dict("long_name" => "time",))
+
+	ncu = defVar(ds,"u",FT,("xF","yC","time"),attrib = Dict(
+		"long_name" => "u_component_of_wind",
+		"full_name" => "Nondimensional u-Wind",
+		"units"		=> "L/T",
+	))
+
+	ncv = defVar(ds,"v",FT,("xC","yF","time"),attrib = Dict(
+		"long_name" => "v_component_of_wind",
+		"full_name" => "Nondimensional v-Wind",
+		"units"		=> "L/T",
+	))
+
+	ncϕ = defVar(ds,"ϕ",FT,("xC","yC","time"),attrib = Dict(
+		"full_name" => "geopotential",
+		"full_name" => "Nondimensional Height",
+		"units"		=> "H",
+	))
+
+	ncxC[:] = G.xc
+	ncyC[:] = G.yc
+	ncxF[:] = G.xf
+	ncyF[:] = G.yf
+
+	nct[:] = t
+	ncu[:] = u
+	ncv[:] = v
+	ncϕ[:] = ϕ
+
+	close(ds)
+
+	@info "$(now()) - Output fields from the Gill-Matsuno run has been saved."
 
 end
 

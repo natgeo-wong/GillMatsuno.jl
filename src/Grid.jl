@@ -25,7 +25,7 @@ function GenerateGrid(
 	xv = collect(range(xmin,xmax,length=nx+1)); δx = (xv[end] - xv[1]) / nx
 	xf = xv[2:end]
 	xc = (xv[1:(end-1)] .+ xv[2:end]) / 2
-    yf = collect(range(ymin,ymax,length=nx+1)); δy = (yf[end] - yf[1]) / ny
+    yf = collect(range(ymin,ymax,length=ny+1)); δy = (yf[end] - yf[1]) / ny
 	yc = (yf[1:(end-1)] .+ yf[2:end]) / 2
 
 	return Grid{FT}(
