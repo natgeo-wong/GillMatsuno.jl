@@ -1,4 +1,4 @@
-@inline function runGillMatsuno(
+function runGillMatsuno(
     S  :: Simulation{FT},
     G  :: Grid{FT},
     Qv :: Vector{QStructs{FT}},
@@ -74,7 +74,7 @@ function ϕfield!(
 
 end
 
-@inline function ufield!(
+function ufield!(
     un::Array{FT}, u::Array{FT}, ϕ::Array{FT}, v::Array{FT},
     G::Grid{FT}, D::Domain{FT}, S::Simulation{FT}
 ) where FT <: Real
@@ -97,7 +97,7 @@ end
 
 end
 
-@inline function vfield!(
+function vfield!(
     vn::Array{FT}, v::Array{FT}, ϕ::Array{FT}, u::Array{FT},
     G::Grid{FT}, D::Domain{FT}, S::Simulation{FT}
 ) where FT <: Real
