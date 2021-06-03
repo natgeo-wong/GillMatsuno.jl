@@ -4,13 +4,26 @@ module GillMatsuno
 # to the atmosphere
 
 ## Modules Used
+using Dates
+using NCDatasets
+using Printf
+using TimerOutputs
+import Base: eltype, show
+
 export
-        GManalytic, GMcalc
+        GenerateGrid,
+        DomainProperties,
+        QfieldProperties,
+        CreateSimulation,
+        runGillMatsuno,
+        createQ
 
 ## Including other files in the module
 
-include("anadefault.jl")
-include("numdefault.jl")
-
+include("Grid.jl")
+include("Domain.jl")
+include("QForcing.jl")
+include("Simulation.jl")
+include("Run.jl")
 
 end # module
