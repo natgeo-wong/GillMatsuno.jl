@@ -1,7 +1,7 @@
 struct Simulation{FT<:Real}
      δt :: FT
-     tt :: FT
-	 ft :: FT
+     tt :: Float64
+     ft :: Float64
     fnc :: AbstractString
 end
 
