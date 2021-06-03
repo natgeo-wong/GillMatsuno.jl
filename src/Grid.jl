@@ -1,13 +1,13 @@
 struct Grid{FT<:Real}
 	xmin :: FT
 	xmax :: FT
-	nx   :: Integer
+	nx   :: Int
 	δx   :: FT
 	xc   :: Array{FT}
 	xf   :: Array{FT}
 	ymin :: FT
 	ymax :: FT
-	ny   :: Integer
+	ny   :: Int
 	δy   :: FT
 	yc   :: Array{FT}
 	yf   :: Array{FT}

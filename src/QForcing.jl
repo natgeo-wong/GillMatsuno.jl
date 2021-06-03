@@ -8,11 +8,11 @@ end
 
 function QfieldProperties(
 	FT = Float64;
-	A  :: Real = 1,
-	Lx :: Real = 2,
-	Qx :: Real = 0,
-	Ly :: Real = 2,
-	Qy :: Real = 0
+	A  :: Real = 1.,
+	Lx :: Real = 2.,
+	Qx :: Real = 0.,
+	Ly :: Real = 2.,
+	Qy :: Real = 0.
 )
 
 	return QStructs{FT}(A,Lx,Qx,Ly,Qy)

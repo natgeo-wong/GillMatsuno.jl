@@ -5,20 +5,20 @@
     D  :: Domain{FT},
 ) where FT <: Real
 
-	# @info "$(now()) - Initializing the Gill-Matsuno Model ..."
+	@info "$(now()) - Initializing the Gill-Matsuno Model ..."
 
     nx,ny = G.nx,G.ny
 
     Q  = createQ(Qv,G)
     rt = floor(Int32,S.tt/S.δt) + 1	# Number of running steps
     nt = floor(Int32,S.tt/S.ft) + 1	# Number of output steps
-    st = 0                  	# Simulation time
-    ot = 0                  	# Indicator as to whether to save output
+    st = 0.                 	# Simulation time
+    ot = 0.                  	# Indicator as to whether to save output
     mt = 1                  	# Index in output matrix
 
-	# @info "$(now()) - The simulation will run for $(rt-1) timesteps, and output the fields for $(nt-1) timesteps"
-	#
-	# @info "$(now()) - Preallocating arrays for the wind and potential fields ..."
+	@info "$(now()) - The simulation will run for $(rt-1) timesteps, and output the fields for $(nt-1) timesteps"
+
+	@info "$(now()) - Preallocating arrays for the wind and potential fields ..."
 
     ϕ  = zeros(FT,nx,ny);    u  = zeros(FT,nx,ny);    v  = zeros(FT,nx,ny+1);
     ϕn = zeros(FT,nx,ny);    un = zeros(FT,nx,ny);    vn = zeros(FT,nx,ny+1);
@@ -38,7 +38,7 @@
             ot += S.ft
             if !isone(it)
             	mt += 1
-				# @info "$(now()) - Saving output at $(@sprintf("%06.2f",st)) model seconds ..."
+				@info "$(now()) - Saving output at $(@sprintf("%06.2f",st)) model seconds ..."
                 ϕf[:,:,mt] .= ϕ
                 uf[:,:,mt] .= u
                 vf[:,:,mt] .= v
@@ -46,9 +46,6 @@
         end
 
     end
-
-	print_timer()
-	reset_timer!()
 
 	return ϕf
 
@@ -61,15 +58,15 @@ function ϕfield!(
 
     for jj = 1 : G.ny, ii = 1 : G.nx
 
-		@timeit "Line 1" vy = (v[ii,jj+1] - v[ii,jj]) / G.δy
+		vy = (v[ii,jj+1] - v[ii,jj]) / G.δy
 
         if ii != 1
-			@timeit "Line 2" ux = (u[ii,jj] - u[ii-1,jj]) / G.δx
+			ux = (u[ii,jj] - u[ii-1,jj]) / G.δx
 		else
-			@timeit "Line 3" ux = (u[1,jj] - u[G.nx,jj]) / G.δx
+			ux = (u[1,jj] - u[G.nx,jj]) / G.δx
         end
 
-        @timeit "Line 4" ϕn[ii,jj] = ϕ[ii,jj] - S.δt * (D.α * ϕ[ii,jj] + D.g * D.H * (ux+vy) + Q[ii,jj])
+        ϕn[ii,jj] = ϕ[ii,jj] - S.δt * (D.α * ϕ[ii,jj] + D.g * D.H * (ux+vy) + Q[ii,jj])
 
     end
 
