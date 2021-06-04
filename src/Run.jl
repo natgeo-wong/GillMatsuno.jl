@@ -34,6 +34,10 @@ function runGillMatsuno(
 		u .= un
 		v .= vn
 
+		if isnan(sum(ϕ)) || isnan(sum(u)) || isnan(sum(v)
+			error("There are NaN values in the fields, indicating that the model is unstable.  Please reduce the timestep")
+		end
+
         st += S.δt
         if st >= ot
             ot += S.ft
