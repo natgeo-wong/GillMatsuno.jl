@@ -30,7 +30,7 @@ function createQ(
 	Q  = zeros(FT,g.nx,g.ny)
 
 	for Qs in QParams, jj = 1 : g.ny, ii = 1 : g.nx
-		if abs(xc[ii]) < Qs.Lx
+		if abs(xc[ii]-Qs.Qx) < Qs.Lx
 			Q[ii,jj] += Qs.A * cos(pi*(xc[ii]-Qs.Qx)*0.5/Qs.Lx) *
 							   exp(-((yc[jj]-Qs.Qy)/Qs.Ly)^2)
 		end
