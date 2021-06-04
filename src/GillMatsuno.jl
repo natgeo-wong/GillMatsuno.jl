@@ -7,7 +7,6 @@ module GillMatsuno
 using Dates
 using NCDatasets
 using Printf
-using TimerOutputs
 import Base: eltype, show
 
 export
