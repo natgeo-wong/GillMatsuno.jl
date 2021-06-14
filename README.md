@@ -36,6 +36,8 @@
 ] add GillMatsuno
 ```
 
+Due to the recent improvements in memory allocations in Julia, `GillMatsuno.jl` `v2` works best in Julia `v1.5` and above, but can work from `v1.3` onwards.
+
 ## Using `GillMatsuno.jl`
 There are four components to running a model in `GillMatsuno.jl`.  They are:
 1. Grid `G`
