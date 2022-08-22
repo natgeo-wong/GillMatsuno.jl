@@ -1,7 +1,7 @@
 name = "GillMatsuno"
 uuid = "39e863eb-a116-4232-ae62-2a8db89e9457"
 authors = ["Nathanael Wong <natgeo.wong@outlook.com>"]
-version = "2.0.0"
+version = "2.0.1"
 
 [deps]
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
@@ -9,7 +9,7 @@ NCDatasets = "85f8d34a-cbdd-5861-8df4-14fed0d494ab"
 Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [compat]
-NCDatasets = "0.11"
+NCDatasets = "0.11, ^0.12.7"
 julia = "1"
 
 [extras]
